@@ -168,7 +168,7 @@ class Register8:
             f"N={'1' if self.neg   else '0'}"
         )
         return (
-            f"Register8(0b{self._val:08b} | "
+            f"Register8 (0b{self._val:08b} | "
             f"0x{self._val:02X} | "
             f"{self._val:3d}) [{flags}]"
         )
