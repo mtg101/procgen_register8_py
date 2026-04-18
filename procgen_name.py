@@ -51,9 +51,17 @@ class ProcgenName:
     def len(cls):
         return len(cls.the_one_string)
     
-    # static 5 pair test
-    def fpt():
-        return random.randint(0, 255)
+    # 3 pair test
+    @classmethod
+    def fpt(cls):
+        pairIndex = random.randint(0, 127) * 2
+        name = cls.the_one_string[pairIndex : pairIndex + 2]
+        pairIndex = random.randint(0, 127) * 2
+        name = name + cls.the_one_string[pairIndex : pairIndex + 2]
+        pairIndex = random.randint(0, 127) * 2
+        name = name + cls.the_one_string[pairIndex : pairIndex + 2]
+
+        return name
     
 if __name__ == "__main__":
     print(ProcgenName.fpt())
