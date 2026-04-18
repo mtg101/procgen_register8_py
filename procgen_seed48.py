@@ -58,11 +58,28 @@ class Seed48:
 
     # takes the name of a system/npc/object and turns into a 48bit seed
     # uses the Elite step to randomize between each letter for lots of randomness
-    # (and lol, this ": str" is just documentation, it's not even checked at runtime! :table_flip:)
     # once you have that seed, you then advance to next state and grab your byte from the 48 for procgen
-    def set_seed_from_name(self, name: str):
+    # (and lol, this ": str" is just documentation, it's not even checked at runtime! :table_flip:)
+    def set_from_name(self, name: str):
         self.reset()
-        print("tbd")
+
+        # add char valus to one of w1's bytes
+        # w1 used in all the sums (w0+w1, w1+w2, w0+w1+w2)
+        # advance seed each time to scramble in
+        for char in name:
+            self.w1_lo.add(ord(char))
+            self.next_seed()
+            self.next_seed()
+            self.next_seed()
+            self.next_seed()
+            self.next_seed()
+
+        # 5 times so any small change has mixed up all seeds
+        self.next_seed()
+        self.next_seed()
+        self.next_seed()
+        self.next_seed()
+        self.next_seed()
 
 
     # next seed Elite algo - but algo from LLMs is dodgy 
@@ -92,6 +109,7 @@ class Seed48:
 
 if __name__ == "__main__":
     seed = Seed48()
+    seed.set_from_name("MAWF")
     print(seed)
     seed.next_seed()
     print(seed)

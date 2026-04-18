@@ -1,4 +1,5 @@
 from register8 import Register8
+from procgen_seed48 import Seed48
 import random
 
 
@@ -62,58 +63,68 @@ class ProcgenName:
         return self
     
     # name
-    name = "not set"
-
-    # LFSR register
-    lfsr = Register8(0x17)
+    name = None
 
     def __repr__(self) -> str:
         return (
-            "Name:\n"
-            f"\t{self.name}\n"
-            f"\t{self.lfsr}"
+            f"{self.name}"
         )
 
-    def c64_style_lfsr_right(self):
-        # shift right
-        self.lfsr.shr()
-
-        # if carry, XOR with magic $1D
-        if self.lfsr.carry:
-            self.lfsr.XOR(0xB8)
-
-        return self
-
-    def c64_style_lfsr_left(self):
-        # shift right
-        self.lfsr.shl()
-
-        # if carry, XOR with magic $1D
-        if self.lfsr.carry:
-            self.lfsr.XOR(0x1D)
-
-        return self
+    def single_from_seed(self, seed: Seed48):
+        self.name = ""
+        return self.add_name()
     
+    def multi_from_seed(self, seed: Seed48):
+        self.name = ""
+        size_list = [1, 2, 2, 2, 2, 3, 3, 4]
+        index = seed.w0_hi._val & 0b00000111
+        size = size_list[index]
+        for i in range(0, size):
+            self.add_name()
+            self.name = self.name + " "
+
+        return self
 
 
+    def add_name(self):
+        size_list = [1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 5]
+        # how many pairs
+        # 0-15 index
+        index = seed.w0_hi._val & 0b00001111
+        size = size_list[index]
 
+        # get name from that many pairs
+        for i in range(0, size):
+            pair_index = (seed.w2_lo._val & 0b01111111) * 2
+            self.name = self.name + self.the_one_string[pair_index : pair_index + 2].replace(" ", "")
+            seed.next_seed()
+
+        return self
 
 
 
 if __name__ == "__main__":
-    name = ProcgenName().rng_len(3)
+    seed = Seed48()
+    name = "Bob 0"
     print(name)
-    print("right shift:")
-    # Example usage
-    for _ in range(8):
-        print(name.lfsr)
-        state = name.c64_style_lfsr_right()
-
-    print("\nright left:\n")
-    # Example usage
-    for _ in range(8):
-        print(name.lfsr)
-        state = name.c64_style_lfsr_left()
+    seed.set_from_name(name)
+    name = ProcgenName().multi_from_seed(seed)
+    print(name)
+    name = "Bob 1"
+    print(name)
+    seed.set_from_name(name)
+    name = ProcgenName().multi_from_seed(seed)
+    print(name)
+    name = "Bob 2"
+    print(name)
+    seed.set_from_name(name)
+    name = ProcgenName().multi_from_seed(seed)
+    print(name)
+    name = "Bob 3"
+    print(name)
+    seed.set_from_name(name)
+    name = ProcgenName().multi_from_seed(seed)
+    print(name)
 
 
 
