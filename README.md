@@ -14,4 +14,4 @@ So now I'm using that Register8 class to map out the procgen for Culture-64 game
 
 All while learning how to use Python! And by use I mean not just learning how an if statement looks in Python - I include things like interactive mode, how tests work, the cool f-strings.
 
-Update: so I've learned that when a Python function says it takes a string and returns an int... Python doesn't care if you pass a int and it returns a string. WTF? It's like it's designed to catch you out... Rust was too heavy for this task but Python is... well it's dengaroues even as a scripting language! I'm sorry Java... despite your gargabe garbage collection, at least you have rules!
+Update: so I've learned that when a Python function says it takes a string and returns an int... Python doesn't care if you pass a int and it returns a string. WTF? It's like it's designed to catch you out... Rust was too heavy for this task but Python is... well it's dangerous even as a scripting language! I'm sorry Java... despite your gargabe garbage collection, at least you have rules!
