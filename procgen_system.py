@@ -24,16 +24,13 @@ class PgSystem:
     colour_1 = None
     colour_2 = None
 
-    sun_types = ["", ""]
+    sun_types = ["Red Dwarf (M-type)", "Yellow Dwarf (G-type)", "Blue Star (O-type)", "Red Giant", 
+                    "Binary", "White Dwarf", "Neturon Star", "Brown Dwarf"]
     sun_type = None
-    sun_sizes = [
-        ["", ""],
-        ["", ""]
-    ]
-    sun_size = None
 
-    planet_types = ["Red Dwarf (M-type)", "Yellow Dwarf (G-type)", "Blue Star (O-type)", "Red Giant", 
-                    "Red Supergiant", "White Dwarf", "Neturon Star", "Brown Dwarf"]
+
+    planet_types = ["Terrestial", "Super-Earth", "Ice Giant", "Gas Giant", 
+                    "Ocean", "Lava", "Rogue", "Dessert"]
     planets_types = None
     planets_names = None
 
@@ -57,6 +54,8 @@ class PgSystem:
         self.colour_2 = self.colours_2[(self.seed.w0_lo._val >> 6) & 0b00000011]
         self.security_level = self.security_levels[self.seed.w0_hi._val & 0b00000111]
         num_planets = (self.seed.w0_hi._val >> 3) & 0b00000011   # 1-4
+
+        self.sun_type = self.sun_types[self.seed.w1_lo._val & 0b00000111]
 
         planet_seed = copy.copy(self.seed)
         self.planets_types = []
@@ -92,6 +91,7 @@ class PgSystem:
         return (
             f"Name: {self.name}\n"
             f"\tSeed:\t\t{self.seed}\n"
+            f"\tSun type:\t{self.sun_type}\n"
             f"\tTech level:\t{self.tech_level}\n"
             f"\t1st colour:\t{self.colour_1}\t"
             f"\t2nd colour:\t{self.colour_2}\n"
