@@ -81,6 +81,8 @@ class Seed48:
         self.next_seed()
         self.next_seed()
 
+        return self
+
 
     # next seed Elite algo - but algo from LLMs is dodgy 
     #   they disagree even with themselves on the exact details...

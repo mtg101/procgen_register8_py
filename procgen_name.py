@@ -80,17 +80,17 @@ class ProcgenName:
         index = seed.w0_hi._val & 0b00000111
         size = size_list[index]
         for i in range(0, size):
-            self.add_name()
+            self.add_name(seed)
             self.name = self.name + " "
 
         return self
 
 
-    def add_name(self):
+    def add_name(self, seed: Seed48):
         size_list = [1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 5]
         # how many pairs
         # 0-15 index
-        index = seed.w0_hi._val & 0b00001111
+        index = seed.w0_lo._val & 0b00001111
         size = size_list[index]
 
         # get name from that many pairs
